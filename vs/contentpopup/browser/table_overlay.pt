@@ -1,0 +1,17 @@
+<div id="table-overlay"
+     i18n:domain="vs.contentpopup">
+
+     <script language="text/javascript">
+        function popup_close() {
+            jQuery('.close').click();
+        }
+
+        function popup_load(url) {
+            jQuery('#image-fullscreen-popup').load(url);
+        }
+    </script>
+
+    <a id="close-link" i18n:translate="label_close" href="javascript:popup_close()">Close</a>
+
+    <div tal:content="structure python: view.show_table(request.uid, request.id)" />
+</div>
