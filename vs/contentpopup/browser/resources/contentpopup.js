@@ -11,6 +11,7 @@ $(document).ready(function() {
     $('.captioned img,img.captioned').each(function(i) {
         var src = $(this).attr('src');
         var parts = src.split('/');
+        
         if (src.indexOf('@@images')>=0) {
             /* e.g. ajung.gif/@@images/1bc922b8-ca26-4b50-a9f6-3524e46fde36.jpeg */
             src = parts.slice(0, parts.length-2).join('/');
@@ -18,7 +19,11 @@ $(document).ready(function() {
         else {
             // remove trailing scale
             var scale = parts[parts.length-1];
-            if (scale.indexOf('image_') > -1 || scale == 'image') {
+            if (scale == 'index_html')  {
+                /* e.g. path/to/content/some.jpg/index_html */
+                src = parts.slice(0, parts.length-1).join('/');
+            }
+            else if (scale.indexOf('image_') > -1 || scale == 'image') {
                 src = parts.slice(0, parts.length-1).join('/');
             }
         }
@@ -34,7 +39,6 @@ $(document).ready(function() {
             }
         );
     });
-
 
     /*
      * Table overlay
