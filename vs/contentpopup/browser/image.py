@@ -15,10 +15,11 @@ class Image(BrowserView):
         return self.context.getField('image')
 
     def download(self):
-        image = self.image
-        img_data = str(image.data)
-        self.request.response.setHeader('content-type', image.getContentType())
-        self.request.response.setHeader('content-disposition', 'attachment; filename=%s' % image.getId())
+        image = self.context.getField('image')
+        img_data = str(image.get(self.context).data)
+        mt = image.getContentType(self.context)
+        self.request.response.setHeader('content-type', mt)
+        self.request.response.setHeader('content-disposition', 'attachment; filename=%s.%s' % (self.context.getId(), mt.split('/')[-1]))
         self.request.response.setHeader('content-length', len(img_data))
         self.request.response.write(img_data)
 
@@ -26,7 +27,7 @@ class Image(BrowserView):
         try:
             return self.image.getContentType().split('/')[1].upper()
         except:
-            return self.image.getContentType(self.image).split('/')[1].upper()
+            return self.image.getContentType(self.context).split('/')[1].upper()
 
     def image_size(self, id):
         try:

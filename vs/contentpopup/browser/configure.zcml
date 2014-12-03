@@ -23,7 +23,7 @@
   />
 
   <browser:page
-    for="Products.ATContentTypes.interface.IATImage"
+    for="*"
     name="download-image"
     class=".image.Image"
     attribute="download"
