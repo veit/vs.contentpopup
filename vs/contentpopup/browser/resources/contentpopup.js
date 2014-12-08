@@ -10,6 +10,8 @@ $(document).ready(function() {
 
     $('.captioned img,img.captioned').each(function(i) {
         var src = $(this).attr('src');
+        $(this).attr('src',  src.replace('/index_html', ''));
+
         var parts = src.split('/');
         
         if (src.indexOf('@@images')>=0) {
@@ -27,6 +29,7 @@ $(document).ready(function() {
                 src = parts.slice(0, parts.length-1).join('/');
             }
         }
+        src = src.replace('/index_html', '');
         $(this).after('<span class="magnify"></span>'); 
         $(this).next().andSelf().wrapAll('<a class="img-fullscreen" href="' + src + '/@@image_fullscreen_overlay"></a>');
     });
