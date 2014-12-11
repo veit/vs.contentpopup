@@ -10,13 +10,20 @@ $(document).ready(function() {
 
     $('.captioned img,img.captioned').each(function(i) {
         var src = $(this).attr('src');
-        $(this).attr('src',  src.replace('/index_html', ''));
+//        $(this).attr('src',  src.replace('/index_html', ''));
+
 
         var parts = src.split('/');
         
-        if (src.indexOf('@@images')>=0) {
+        if (src.indexOf('@@images/image/')>=0) {
+            /* e.g. ajung.gif/@@images/image/thumb */
+            src = parts.slice(0, parts.length-3).join('/');
+
+        }
+        else if (src.indexOf('@@images')>=0) {
             /* e.g. ajung.gif/@@images/1bc922b8-ca26-4b50-a9f6-3524e46fde36.jpeg */
             src = parts.slice(0, parts.length-2).join('/');
+
         }
         else {
             // remove trailing scale
@@ -29,7 +36,7 @@ $(document).ready(function() {
                 src = parts.slice(0, parts.length-1).join('/');
             }
         }
-        src = src.replace('/index_html', '');
+//        src = src.replace('/index_html', '');
         $(this).after('<span class="magnify"></span>'); 
         $(this).next().andSelf().wrapAll('<a class="img-fullscreen" href="' + src + '/@@image_fullscreen_overlay"></a>');
     });
